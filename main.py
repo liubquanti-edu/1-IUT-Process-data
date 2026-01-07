@@ -11,7 +11,7 @@ def extract_professors(csv_file):
     return sorted(professors)  # Сортуємо імена в алфавітному порядку
 
 def main():
-    csv_file = 'data/ADECal-mod-2.csv'  # Вкажіть шлях до вашого CSV-файлу
+    csv_file = 'data/ADECal.csv'  # Вкажіть шлях до вашого CSV-файлу
     professors = extract_professors(csv_file)
     print("Список викладачів:")
     for prof in professors:
