@@ -3,6 +3,7 @@ import keyboard
 from colorama import Fore, Style, init
 from src.connect import connect_data
 from src.professor import choose_professor
+from src.convertor import convert_ics_to_csv
 
 init(autoreset=True)
 
@@ -46,8 +47,7 @@ def main():
                 elif selected_index == 1:  
                     connected_file = connect_data()
                 elif selected_index == 2:  
-                    print(f"Vous avez choisi: {menu_items[selected_index]}")
-                    input("Appuyez sur Entrée pour revenir au menu...")
+                    convert_ics_to_csv()
                 elif selected_index == 3:  
                     print(f"{Fore.YELLOW}Au revoir!{Style.RESET_ALL}")
                     break

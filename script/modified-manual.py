@@ -5,18 +5,22 @@ Modified on Wed Jan  7 08:53:43 2026
 
 @author: liubquanti
 """
+import sys
 from datetime import datetime
 from icalendar import Calendar
 import csv
 import re
+
+# CONFIG
+
+ICS_FILE_LOCATION = sys.argv[1]
+CSV_FILE_LOCATION = sys.argv[2]
 
 # ICAL2CSV
 
 class Convert2CSV():
     def __init__(self):
         self.csv_data = []
-        self.ICS_FILE_LOCATION = None
-        self.CSV_FILE_LOCATION = None
 
     def read_ical(self, ical_file_location):
         with open(ical_file_location, 'r', encoding='utf-8') as ical_file:
@@ -101,4 +105,16 @@ class Convert2CSV():
                     writer.writerow([r.strip() for r in row])
                 else:
                     print(f"Skipping row due to mismatched columns: {row}")
+
+
+Convert2CSV = Convert2CSV()
+Convert2CSV.ICS_FILE_LOCATION = ICS_FILE_LOCATION
+Convert2CSV.CSV_FILE_LOCATION = CSV_FILE_LOCATION
+
+Convert2CSV.read_ical(Convert2CSV.ICS_FILE_LOCATION)
+Convert2CSV.make_csv()
+Convert2CSV.process_summary_column()
+Convert2CSV.split_column(3, ':')  # Split the Summary column into Summary and Group
+Convert2CSV.process_description_column()
+Convert2CSV.save_csv(Convert2CSV.CSV_FILE_LOCATION)
 
