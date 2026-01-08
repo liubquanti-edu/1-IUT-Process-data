@@ -3,6 +3,7 @@ import csv
 import keyboard
 from colorama import Fore, Style
 from src.dataprocess import generate_report
+from math import ceil
 
 def extract_professors(file_path):
     professors = set()
@@ -24,16 +25,29 @@ def extract_professors(file_path):
 
 def display_professor_menu(professors):
     selected_index = 0
+    max_rows = 10  
+    num_columns = ceil(len(professors) / max_rows)  
 
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f"{Fore.BLUE}Sélectionnez un professeur:\n{Style.RESET_ALL}")
-        for i, professor in enumerate(professors):
-            if i == selected_index:
-                print(f"{Fore.CYAN}> {professor}{Style.RESET_ALL}")
-            else:
-                print(f"  {professor}")
 
+        
+        columns = [professors[i:i + max_rows] for i in range(0, len(professors), max_rows)]
+        for row in range(max_rows):
+            row_items = []
+            for col in range(num_columns):
+                if row < len(columns[col]):
+                    professor = columns[col][row]
+                    if professors.index(professor) == selected_index:
+                        row_items.append(f"{Fore.CYAN}> {professor:<20}{Style.RESET_ALL}")
+                    else:
+                        row_items.append(f"  {professor:<20}")
+                else:
+                    row_items.append(" " * 22)  
+            print("".join(row_items))
+
+        
         event = keyboard.read_event(suppress=True)
         if event.event_type == "down":
             if event.name == "down":

@@ -10,7 +10,7 @@ def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def display_menu(selected_index, connected_file):
-    menu_items = ["Choisir un professeur", "Connecter les données", "Convertir les données"]
+    menu_items = ["Choisir un professeur", "Connecter les données", "Convertir les données", "Quitter"]
     clear_console()
     print(f"{Fore.BLUE}Compagnon du fich de service\n{Style.RESET_ALL}")
     for i, item in enumerate(menu_items):
@@ -28,7 +28,7 @@ def display_menu(selected_index, connected_file):
 
 def main():
     selected_index = 0
-    menu_items = ["Choisir un professeur", "Connecter les données", "Convertir les données"]
+    menu_items = ["Choisir un professeur", "Connecter les données", "Convertir les données", "Quitter"]
     connected_file = None
 
     while True:
@@ -41,13 +41,16 @@ def main():
                 selected_index = (selected_index - 1) % len(menu_items)
             elif event.name == "enter":
                 clear_console()
-                if selected_index == 0:  # Choisir un professeur
+                if selected_index == 0:  
                     choose_professor(connected_file)
-                elif selected_index == 1:  # Connecter les données
+                elif selected_index == 1:  
                     connected_file = connect_data()
-                else:
+                elif selected_index == 2:  
                     print(f"Vous avez choisi: {menu_items[selected_index]}")
                     input("Appuyez sur Entrée pour revenir au menu...")
+                elif selected_index == 3:  
+                    print(f"{Fore.YELLOW}Au revoir!{Style.RESET_ALL}")
+                    break
 
 if __name__ == "__main__":
     main()
